@@ -9,6 +9,7 @@ License:    BSD
 URL:        http://aomedia.org/
 Source0:    https://aomedia.googlesource.com/aom/+archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
+BuildRequires:  gcc-c++
 BuildRequires:  gcc
 BuildRequires:  cmake3
 BuildRequires:  doxygen
