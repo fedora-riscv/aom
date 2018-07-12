@@ -2,7 +2,7 @@
 
 Name:       aom
 Version:    1.0.0
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -101,6 +101,9 @@ install -pm 0755 examples/analyzer %{buildroot}%{_bindir}/aomanalyzer
 
 
 %changelog
+* Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed Mar 07 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-1
 - First RPM release
 
