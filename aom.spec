@@ -1,13 +1,21 @@
 %global sover           0
 
+# Use commit with updated changelog for correct versioning
+%global commit          0ddc150516b7672101265eac032a11a9aae4cb53
+%global shortcommit     %(c=%{commit}; echo ${c:0:7})
+%global snapshotdate    20180911
+
 Name:       aom
 Version:    1.0.0
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
 URL:        http://aomedia.org/
-Source0:    https://aomedia.googlesource.com/aom/+archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+# We want to keep the git data for versioning aom.pc correctly
+# so we can't download the archive directly from the repo.
+Source0:    %{name}-%{version}.tar.gz
+Source1:    makesrc.sh
 
 BuildRequires:  gcc
 BuildRequires:  cmake3
@@ -45,11 +53,11 @@ video format.
 
 
 %prep
-%autosetup -p1 -c %{name}-%{version}
+%autosetup -p1 -n %{name}-%{version}
 
 
 %build
-cd build
+mkdir _build && cd _build
 %cmake3 ../ -DENABLE_CCACHE=1 \
             -DCMAKE_SKIP_RPATH=1 \
             -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -75,7 +83,7 @@ cd build
 
 
 %install
-cd build
+cd _build
 %make_install
 install -pm 0755 examples/analyzer %{buildroot}%{_bindir}/aomanalyzer
 
@@ -93,13 +101,16 @@ install -pm 0755 examples/analyzer %{buildroot}%{_bindir}/aomanalyzer
 
 
 %files devel
-%doc build/docs/html/
+%doc _build/docs/html/
 %{_includedir}/%{name}
 %{_libdir}/libaom.so
 %{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Tue Sep 11 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-2
+- Update the archive in order to detect the correct version from the changelog
+
 * Wed Mar 07 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-1
 - First RPM release
 
