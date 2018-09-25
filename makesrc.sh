@@ -8,18 +8,18 @@ SHORT=${COMMIT:0:7}
 echo -e "\nCreate git snapshot\n"
 
 echo "Cloning..."
-rm -rf $NAME-$VERSION
-git clone https://aomedia.googlesource.com/aom $NAME-$VERSION
+rm -rf $NAME-$COMMIT
+git clone https://aomedia.googlesource.com/aom $NAME-$COMMIT
 
 echo "Getting commit..."
-pushd $NAME-$VERSION
+pushd $NAME-$COMMIT
 git checkout $COMMIT
 popd
 
 echo "Archiving..."
-tar czf $NAME-$VERSION.tar.gz $NAME-$VERSION/
+tar czf $NAME-$SHORT.tar.gz $NAME-$COMMIT/
 
 echo "Cleaning..."
-rm -rf $NAME-$VERSION
+rm -rf $NAME-$COMMIT
 
 echo "Done."
