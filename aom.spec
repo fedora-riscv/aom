@@ -1,21 +1,25 @@
 %global sover           0
 
 # Use commit with updated changelog for correct versioning
-%global commit          0ddc150516b7672101265eac032a11a9aae4cb53
+%global commit          d0076f507a6027455540e2e4f25f84ca38803e07
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20180911
+%global snapshotdate    20180925
+%global prerelease      1
 
 Name:       aom
 Version:    1.0.0
-Release:    4%{?dist}
+Release:    5.%{?prerelease:%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
 URL:        http://aomedia.org/
 # We want to keep the git data for versioning aom.pc correctly
 # so we can't download the archive directly from the repo.
-Source0:    %{name}-%{version}.tar.gz
+Source0:    %{name}-%{shortcommit}.tar.gz
 Source1:    makesrc.sh
+
+# https://bugs.chromium.org/p/aomedia/issues/detail?id=2161
+Patch0:     0001-Add-symbol-exports-needed-by-examples-analyzer-and-e.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  gcc
@@ -72,7 +76,7 @@ video format.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{version}
+%autosetup -p1 -n %{name}-%{commit}
 
 
 %build
@@ -97,7 +101,8 @@ mkdir _build && cd _build
 %endif
             -DCONFIG_WEBM_IO=1 \
             -DENABLE_DOCS=1 \
-            -DCONFIG_ANALYZER=1
+            -DCONFIG_ANALYZER=1 \
+            -DCONFIG_LOWBITDEPTH=1
 %make_build
 
 
@@ -134,6 +139,11 @@ install -pm 0755 examples/analyzer %{buildroot}%{_bindir}/aomanalyzer
 
 
 %changelog
+* Tue Sep 25 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-5.20180925gitd0076f5
+- Update to commit d0076f507a6027455540e2e4f25f84ca38803e07
+- Set CONFIG_LOWBITDEPTH to 1
+- Fix #1632658
+
 * Thu Sep 13 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-4
 - Split the package into libs/tools
 

@@ -1,0 +1,45 @@
+From 4b90cc60118f0aed08853ae102c560762fb74627 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Robert-Andr=C3=A9=20Mauchin?= <zebob.m@gmail.com>
+Date: Fri, 14 Sep 2018 23:17:10 +0200
+Subject: [PATCH] Add symbol exports needed by examples/analyzer and
+ examples/inspect
+
+Added to aom/exports_com:
+aom_free
+
+Added to av1/exports_com:
+ifd_init
+ifd_inspect
+
+BUG= aomedia:2161
+
+Change-Id: Ide307b949c886fa8a0398e200980c80b58e3e74e
+---
+ aom/exports_com | 1 +
+ av1/exports_com | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/aom/exports_com b/aom/exports_com
+index 2798bd51a..cf99bc5d9 100644
+--- a/aom/exports_com
++++ b/aom/exports_com
+@@ -9,6 +9,7 @@ text aom_codec_iface_name
+ text aom_codec_version
+ text aom_codec_version_extra_str
+ text aom_codec_version_str
++text aom_free
+ text aom_img_alloc
+ text aom_img_alloc_with_border
+ text aom_img_flip
+diff --git a/av1/exports_com b/av1/exports_com
+index 5c8e0e09d..e49e0dc5f 100644
+--- a/av1/exports_com
++++ b/av1/exports_com
+@@ -1,2 +1,4 @@
+ text aom_read_obu_header_and_size
+ text av1_resize_frame420
++text ifd_init
++text ifd_inspect
+-- 
+2.17.1
+
