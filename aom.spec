@@ -8,7 +8,7 @@
 
 Name:       aom
 Version:    1.0.0
-Release:    5.%{?prerelease:%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    6.%{?prerelease:%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -139,6 +139,9 @@ install -pm 0755 examples/analyzer %{buildroot}%{_bindir}/aomanalyzer
 
 
 %changelog
+* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-6.20180925gitd0076f5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Tue Sep 25 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-5.20180925gitd0076f5
 - Update to commit d0076f507a6027455540e2e4f25f84ca38803e07
 - Set CONFIG_LOWBITDEPTH to 1
