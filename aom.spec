@@ -25,7 +25,7 @@ BuildRequires:  git-core
 BuildRequires:  graphviz
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(Getopt::Long)
-BuildRequires:  python3-devel
+BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  yasm
 
 # EPEL7 GCC 8
