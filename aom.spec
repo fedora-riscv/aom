@@ -10,7 +10,7 @@
 
 Name:       aom
 Version:    1.0.0
-Release:    8.%{?prerelease:%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    9.%{?prerelease:%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -100,6 +100,9 @@ cd _build
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-9.20190810git9666276
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Fri Aug 09 17:45:23 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-8.20190810git9666276
 - Update to commit 9666276accea505cd14cbcb9e3f7ff5033da9172
 
