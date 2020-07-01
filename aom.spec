@@ -1,16 +1,16 @@
-%global sover           0
+%global sover           2
 # git describe
-%global aom_version     1.0.0-2227-gcfd59e96a
+%global aom_version     v2.0.0
 
 # Use commit with updated changelog for correct versioning
-%global commit          9666276accea505cd14cbcb9e3f7ff5033da9172
+%global commit          bb35ba9148543f22ba7d8642e4fbd29ae301f5dc
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20190810
-%global prerelease      1
+%global snapshotdate    20200701
+# %%global prerelease      1
 
 Name:       aom
-Version:    1.0.0
-Release:    9.%{?prerelease:%{snapshotdate}git%{shortcommit}}%{?dist}
+Version:    2.0.0
+Release:    1%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -27,6 +27,9 @@ BuildRequires:  perl-interpreter
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  python3-devel
 BuildRequires:  yasm
+%ifarch x86_64
+BuildRequires:  pkgconfig(libvmaf)
+%endif
 
 Provides:       av1 = %{version}-%{release}
 Requires:       libaom%{?_isa} = %{version}-%{release}
@@ -62,26 +65,31 @@ video format.
 
 %prep
 %autosetup -p1 -c %{name}-%{commit}
-# Set GIT revision in version
+# Set GIT revision in version
 sed -i 's@set(aom_version "")@set(aom_version "%{aom_version}")@' build/cmake/version.cmake
+# Fix VMAF detection
+sed -i 's@libvmaf\.a @@' CMakeLists.txt
 
 %build
-mkdir _build && cd _build
-%cmake3 ../ -DENABLE_CCACHE=1 \
-            -DCMAKE_SKIP_RPATH=1 \
-            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%cmake3 -B _build -DENABLE_CCACHE=1 \
+                  -DCMAKE_SKIP_RPATH=1 \
+                  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+                  -DCONFIG_WEBM_IO=1 \
+                  -DENABLE_DOCS=1 \
+                  -DCONFIG_ANALYZER=0 \
+                  -DCONFIG_SHARED=1 \
 %ifarch %{arm}
-            -DAOM_NEON_INTRIN_FLAG=-mfpu=neon \
+                  -DAOM_NEON_INTRIN_FLAG=-mfpu=neon \
 %endif
-            -DCONFIG_WEBM_IO=1 \
-            -DENABLE_DOCS=1 \
-            -DCONFIG_ANALYZER=0 \
-            -DCONFIG_LOWBITDEPTH=1
-%make_build
+%ifarch x86_64
+                  -DCONFIG_TUNE_VMAF=1 \
+%endif
+                  %{nil}
+%make_build -C _build
 
 %install
-cd _build
-%make_install
+%make_install -C _build
+rm -rf %{buildroot}%{_libdir}/libaom.a
 
 %files
 %doc AUTHORS CHANGELOG README.md
@@ -91,7 +99,7 @@ cd _build
 
 %files -n libaom
 %license LICENSE PATENTS
-%{_libdir}/libaom.so.%{sover}
+%{_libdir}/libaom.so.%{sover}*
 
 %files -n libaom-devel
 %doc _build/docs/html/
@@ -100,6 +108,9 @@ cd _build
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jul 01 14:33:18 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.0-1
+- Update to 2.0.0 (#1852847)
+
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-9.20190810git9666276
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
