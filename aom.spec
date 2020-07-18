@@ -1,3 +1,6 @@
+# Force out of source build
+%undefine __cmake_in_source_build
+
 %global sover           2
 # git describe
 %global aom_version     v2.0.0
@@ -71,24 +74,24 @@ sed -i 's@set(aom_version "")@set(aom_version "%{aom_version}")@' build/cmake/ve
 sed -i 's@libvmaf\.a @@' CMakeLists.txt
 
 %build
-%cmake3 -B _build -DENABLE_CCACHE=1 \
-                  -DCMAKE_SKIP_RPATH=1 \
-                  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-                  -DCONFIG_WEBM_IO=1 \
-                  -DENABLE_DOCS=1 \
-                  -DCONFIG_ANALYZER=0 \
-                  -DCONFIG_SHARED=1 \
+%cmake3 -DENABLE_CCACHE=1 \
+        -DCMAKE_SKIP_RPATH=1 \
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DCONFIG_WEBM_IO=1 \
+        -DENABLE_DOCS=1 \
+        -DCONFIG_ANALYZER=0 \
+        -DCONFIG_SHARED=1 \
 %ifarch %{arm}
-                  -DAOM_NEON_INTRIN_FLAG=-mfpu=neon \
+        -DAOM_NEON_INTRIN_FLAG=-mfpu=neon \
 %endif
 %ifarch x86_64
-                  -DCONFIG_TUNE_VMAF=1 \
+        -DCONFIG_TUNE_VMAF=1 \
 %endif
-                  %{nil}
-%make_build -C _build
+        %{nil}
+%cmake3_build
 
 %install
-%make_install -C _build
+%cmake3_install
 rm -rf %{buildroot}%{_libdir}/libaom.a
 
 %files
