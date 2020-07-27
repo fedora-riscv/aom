@@ -13,7 +13,7 @@
 
 Name:       aom
 Version:    2.0.0
-Release:    1%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    2%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -111,6 +111,9 @@ rm -rf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Wed Jul 01 14:33:18 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.0-1
 - Update to 2.0.0 (#1852847)
 
