@@ -13,7 +13,7 @@
 
 Name:       aom
 Version:    2.0.0
-Release:    2%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    3%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -74,6 +74,10 @@ sed -i 's@set(aom_version "")@set(aom_version "%{aom_version}")@' build/cmake/ve
 sed -i 's@libvmaf\.a @@' CMakeLists.txt
 
 %build
+%ifarch %{arm}
+%global optflags %{__global_compiler_flags} -march=armv7-a -mfpu=neon -mtune=cortex-a8 -mabi=aapcs-linux -mfloat-abi=hard
+%endif
+
 %cmake3 -DENABLE_CCACHE=1 \
         -DCMAKE_SKIP_RPATH=1 \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -81,9 +85,6 @@ sed -i 's@libvmaf\.a @@' CMakeLists.txt
         -DENABLE_DOCS=1 \
         -DCONFIG_ANALYZER=0 \
         -DCONFIG_SHARED=1 \
-%ifarch %{arm}
-        -DAOM_NEON_INTRIN_FLAG=-mfpu=neon \
-%endif
 %ifarch x86_64
         -DCONFIG_TUNE_VMAF=1 \
 %endif
@@ -105,12 +106,15 @@ rm -rf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/libaom.so.%{sover}*
 
 %files -n libaom-devel
-%doc _build/docs/html/
+%doc %{_vpath_builddir}/docs/html/
 %{_includedir}/%{name}
 %{_libdir}/libaom.so
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Jul 28 16:30:33 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.0-3
+- Fix FTBFS
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
