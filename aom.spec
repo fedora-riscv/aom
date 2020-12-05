@@ -6,14 +6,14 @@
 %global aom_version     v2.0.0
 
 # Use commit with updated changelog for correct versioning
-%global commit          bb35ba9148543f22ba7d8642e4fbd29ae301f5dc
+%global commit          b52ee6d44adaef8a08f6984390de050d64df9faa
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20200701
+%global snapshotdate    20201205
 # %%global prerelease      1
 
 Name:       aom
-Version:    2.0.0
-Release:    3%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Version:    2.0.1
+Release:    1%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -112,6 +112,10 @@ rm -rf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sat Dec 05 21:18:20 CET 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.1-1
+- Update to 2.0.1
+- Close rhbz#1852847
+
 * Tue Jul 28 16:30:33 CEST 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.0-3
 - Fix FTBFS
 
