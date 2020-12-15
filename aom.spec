@@ -3,17 +3,17 @@
 
 %global sover           2
 # git describe
-%global aom_version     v2.0.0
+%global aom_version     v2.0.1
 
 # Use commit with updated changelog for correct versioning
 %global commit          b52ee6d44adaef8a08f6984390de050d64df9faa
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20201205
+%global snapshotdate    20201215
 # %%global prerelease      1
 
 Name:       aom
 Version:    2.0.1
-Release:    1%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    2%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -83,6 +83,7 @@ sed -i 's@libvmaf\.a @@' CMakeLists.txt
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DCONFIG_WEBM_IO=1 \
         -DENABLE_DOCS=1 \
+        -DENABLE_TESTS=0 \
         -DCONFIG_ANALYZER=0 \
         -DCONFIG_SHARED=1 \
 %ifarch x86_64
@@ -112,6 +113,9 @@ rm -rf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Dec 15 01:26:44 CET 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.1-2
+- Disable tests
+
 * Sat Dec 05 21:18:20 CET 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.1-1
 - Update to 2.0.1
 - Close rhbz#1852847
