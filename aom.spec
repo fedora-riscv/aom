@@ -11,9 +11,15 @@
 %global snapshotdate    20201215
 # %%global prerelease      1
 
+%if 0%{?rhel} >= 8
+%bcond_with vmaf
+%else
+%bcond_without vmaf
+%endif
+
 Name:       aom
 Version:    2.0.1
-Release:    2%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    3%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -30,8 +36,10 @@ BuildRequires:  perl-interpreter
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  python3-devel
 BuildRequires:  yasm
+%if %{with vmaf}
 %ifarch x86_64
 BuildRequires:  pkgconfig(libvmaf)
+%endif
 %endif
 
 Provides:       av1 = %{version}-%{release}
@@ -86,8 +94,10 @@ sed -i 's@libvmaf\.a @@' CMakeLists.txt
         -DENABLE_TESTS=0 \
         -DCONFIG_ANALYZER=0 \
         -DCONFIG_SHARED=1 \
+%if %{with vmaf}
 %ifarch x86_64
         -DCONFIG_TUNE_VMAF=1 \
+%endif
 %endif
         %{nil}
 %cmake3_build
@@ -113,6 +123,9 @@ rm -rf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jan 20 2021 Wim Taymans <wtaymans@redhat.com> - 2.0.1-3
+- Disable vmaf on rhel
+
 * Tue Dec 15 01:26:44 CET 2020 Robert-André Mauchin <zebob.m@gmail.com> - 2.0.1-2
 - Disable tests
 
