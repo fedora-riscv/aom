@@ -19,7 +19,7 @@
 
 Name:       aom
 Version:    2.0.1
-Release:    4%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    5%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -123,6 +123,9 @@ rm -rf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Mar 10 2021 Leigh Scott <leigh123linux@gmail.com> - 2.0.1-5
+- Rebuild for new libvmaf version
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
