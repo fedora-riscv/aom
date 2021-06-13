@@ -28,9 +28,9 @@ Source0:    https://aomedia.googlesource.com/%{name}/+archive/%{commit}.tar.gz#/
 BuildRequires:  gcc-c++
 BuildRequires:  gcc
 BuildRequires:  cmake3
-BuildRequires:  doxygen
 BuildRequires:  git-core
 %if %{without bootstrap}
+BuildRequires:  doxygen
 BuildRequires:  graphviz
 %endif
 BuildRequires:  perl-interpreter
