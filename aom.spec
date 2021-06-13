@@ -1,7 +1,6 @@
 %global sover           3
 # git describe
 %global aom_version     v3.1.1
-%bcond_without bootstrap
 
 # Use commit with updated changelog for correct versioning
 %global commit          7fadc0e77130efb05f52979b0deaba9b6a1bba6d
@@ -28,11 +27,9 @@ Source0:    https://aomedia.googlesource.com/%{name}/+archive/%{commit}.tar.gz#/
 BuildRequires:  gcc-c++
 BuildRequires:  gcc
 BuildRequires:  cmake3
-BuildRequires:  git-core
-%if %{without bootstrap}
 BuildRequires:  doxygen
+BuildRequires:  git-core
 BuildRequires:  graphviz
-%endif
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  python3-devel
@@ -91,9 +88,7 @@ sed -i 's@set(aom_version "")@set(aom_version "%{aom_version}")@' build/cmake/ve
         -DCMAKE_SKIP_RPATH=1 \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DCONFIG_WEBM_IO=1 \
-%if %{without bootstrap}
         -DENABLE_DOCS=1 \
-%endif
         -DENABLE_TESTS=0 \
         -DCONFIG_ANALYZER=0 \
         -DBUILD_SHARED_LIBS=1 \
@@ -121,9 +116,7 @@ rm -rvf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/libaom.so.%{sover}*
 
 %files -n libaom-devel
-%if %{without bootstrap}
 %doc %{_vpath_builddir}/docs/html/
-%endif
 %{_includedir}/%{name}
 %{_libdir}/libaom.so
 %{_libdir}/pkgconfig/%{name}.pc
