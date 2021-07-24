@@ -2,13 +2,12 @@
 
 %global sover           3
 # git describe
-%global aom_version     v3.1.1
+%global aom_version     v3.1.2
 
 # Use commit with updated changelog for correct versioning
-%global commit          7fadc0e77130efb05f52979b0deaba9b6a1bba6d
+%global commit          ae2be8030200925895fa6e98bd274ffdb595cbf6
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20210613
-# %%global prerelease      1
+%global snapshotdate    20210724
 
 %if 0%{?fedora}
 %ifarch x86_64
@@ -18,8 +17,8 @@
 %endif
 
 Name:       aom
-Version:    3.1.1
-Release:    1%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Version:    3.1.2
+Release:    %autorelease
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -124,38 +123,4 @@ rm -rvf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
-* Sun Jun 13 12:47:37 CEST 2021 Robert-André Mauchin <zebob.m@gmail.com> - 3.1.1-1
-- Update to 3.1.1
-- Close: rhbz#1954337
-- Security fix for CVE-2021-30473
-- Fix: rhbz#1961375
-- Fix: rhbz#1961376
-- Security fix for CVE-2021-30475
-- Fix: rhbz#1968017
-- Fix: rhbz#1968018
-
-* Fri Aug 09 17:45:23 CEST 2019 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-8.20190810git9666276
-- Update to commit 9666276accea505cd14cbcb9e3f7ff5033da9172
-
-* Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-7.20180925gitd0076f5
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
-
-* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-6.20180925gitd0076f5
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
-
-* Tue Sep 25 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-5.20180925gitd0076f5
-- Update to commit d0076f507a6027455540e2e4f25f84ca38803e07
-- Set CONFIG_LOWBITDEPTH to 1
-- Fix #1632658
-
-* Thu Sep 13 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-4
-- Split the package into libs/tools
-
-* Tue Sep 11 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-3
-- Update the archive in order to detect the correct version from the changelog
-
-* Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
-
-* Wed Mar 07 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-1
-- First RPM release
+%autochangelog
