@@ -17,7 +17,7 @@
 
 Name:       aom
 Version:    3.1.1
-Release:    1%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+Release:    2%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -122,6 +122,9 @@ rm -rvf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sun Nov 21 2021 Björn Esser <besser82@fedoraproject.org> - 3.1.1-2
+- Rebuild (jpegxl)
+
 * Sun Jun 13 12:47:37 CEST 2021 Robert-André Mauchin <zebob.m@gmail.com> - 3.1.1-1
 - Update to 3.1.1
 - Close: rhbz#1954337
