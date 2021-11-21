@@ -1,11 +1,11 @@
 %global sover           3
 # git describe
-%global aom_version     v3.1.2
+%global aom_version     v3.2.0
 
 # Use commit with updated changelog for correct versioning
-%global commit          ae2be8030200925895fa6e98bd274ffdb595cbf6
+%global commit          287164de79516c25c8c84fd544f67752c170082a
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20210724
+%global snapshotdate    20211013
 
 %if 0%{?fedora}
 %ifarch x86_64
@@ -15,7 +15,7 @@
 %endif
 
 Name:       aom
-Version:    3.1.2
+Version:    3.2.0
 Release:    %autorelease
 Summary:    Royalty-free next-generation video format
 
@@ -28,7 +28,7 @@ BuildRequires:  gcc
 BuildRequires:  cmake3
 BuildRequires:  doxygen
 BuildRequires:  git-core
-BuildRequires:  graphviz
+# BuildRequires:  graphviz
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  python3-devel
