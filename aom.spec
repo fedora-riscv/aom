@@ -1,12 +1,11 @@
 %global sover           3
 # git describe
-%global aom_version     v3.1.1
+%global aom_version     v3.2.0
 
 # Use commit with updated changelog for correct versioning
-%global commit          7fadc0e77130efb05f52979b0deaba9b6a1bba6d
+%global commit          287164de79516c25c8c84fd544f67752c170082a
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20210613
-# %%global prerelease      1
+%global snapshotdate    20211013
 
 %if 0%{?fedora}
 %ifarch x86_64
@@ -16,8 +15,13 @@
 %endif
 
 Name:       aom
+<<<<<<< HEAD
 Version:    3.1.1
 Release:    2%{?prerelease:.%{snapshotdate}git%{shortcommit}}%{?dist}
+=======
+Version:    3.2.0
+Release:    %autorelease
+>>>>>>> rawhide
 Summary:    Royalty-free next-generation video format
 
 License:    BSD
@@ -29,7 +33,7 @@ BuildRequires:  gcc
 BuildRequires:  cmake3
 BuildRequires:  doxygen
 BuildRequires:  git-core
-BuildRequires:  graphviz
+# BuildRequires:  graphviz
 BuildRequires:  perl-interpreter
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  python3-devel
@@ -122,6 +126,7 @@ rm -rvf %{buildroot}%{_libdir}/libaom.a
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+<<<<<<< HEAD
 * Sun Nov 21 2021 Björn Esser <besser82@fedoraproject.org> - 3.1.1-2
 - Rebuild (jpegxl)
 
@@ -189,3 +194,6 @@ rm -rvf %{buildroot}%{_libdir}/libaom.a
 * Wed Mar 07 2018 Robert-André Mauchin <zebob.m@gmail.com> - 1.0.0-1
 - First RPM release
 
+=======
+%autochangelog
+>>>>>>> rawhide
