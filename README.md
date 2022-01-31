@@ -1,3 +1,0 @@
-# aom
-
-The aom package
