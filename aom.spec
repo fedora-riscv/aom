@@ -2,22 +2,22 @@
 
 %global sover           3
 # git describe
-%global aom_version     v3.2.0
+%global aom_version     v3.3.0
 
 # Use commit with updated changelog for correct versioning
-%global commit          287164de79516c25c8c84fd544f67752c170082a
+%global commit          fc430c57c7b0307b4c5ffb686cd90b3c010d08d2
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
-%global snapshotdate    20211013
+%global snapshotdate    20220619
 
 %if 0%{?fedora} || 0%{?rhel} >= 9
 %ifarch x86_64
 %bcond_without vmaf
 %endif
-%bcond_without jpegxl
+%bcond_with jpegxl
 %endif
 
 Name:       aom
-Version:    3.2.0
+Version:    3.4.0
 Release:    %autorelease
 Summary:    Royalty-free next-generation video format
 
@@ -79,6 +79,8 @@ video format.
 %autosetup -p1 -c %{name}-%{commit}
 # Set GIT revision in version
 sed -i 's@set(aom_version "")@set(aom_version "%{aom_version}")@' build/cmake/version.cmake
+# Disable PDF generation which is buggy
+sed -i "s@GENERATE_LATEX         = YES@GENERATE_LATEX         = NO@" libs.doxy_template
 
 %build
 %ifarch %{arm}
