@@ -1,6 +1,6 @@
 %global sover           3
 # git describe
-%global aom_version     v3.3.0
+%global aom_version     v3.4.0
 
 # Use commit with updated changelog for correct versioning
 %global commit          fc430c57c7b0307b4c5ffb686cd90b3c010d08d2
