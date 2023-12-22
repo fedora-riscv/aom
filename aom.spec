@@ -5,12 +5,12 @@
 %ifarch x86_64
 %bcond_without vmaf
 %endif
-%bcond_without jpegxl
 %endif
+%bcond_without jpegxl
 
 Name:       aom
 Version:    3.7.1
-Release:    %autorelease
+Release:    %{autorelease}.rv64
 Summary:    Royalty-free next-generation video format
 
 License:    BSD-3-Clause
